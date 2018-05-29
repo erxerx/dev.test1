@@ -9,8 +9,8 @@ def some_task():
         k = k + 1
 
 
-t = Thread(target=some_task, daemon=True)  # run the some_task function in another
 print('Start at', ctime(time()))
+t = Thread(target=some_task, daemon=True)  # run the some_task function in another
 t.start()
 sleep(9)
 print('Exit  at', ctime(time()))
