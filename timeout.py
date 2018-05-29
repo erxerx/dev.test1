@@ -1,4 +1,3 @@
-import random
 import threading
 import time
 
@@ -14,9 +13,9 @@ threading.Timer(9, exiting).start()
 i, j, k = 0.1, 0.1, 0
 print('Start at', time.ctime(time.time()))
 while exitflag:
-    i = random.random()
+    #    i = random.random()
     k = k + 1
-    if j < i:
-        j = i
-print('Exit at', time.ctime(time.time()))
+#    if j < i:
+#       j = i
+print('Exit  at', time.ctime(time.time()))
 print(i, j, k)
