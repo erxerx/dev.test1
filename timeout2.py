@@ -1,17 +1,18 @@
 from threading import Thread
-from time import ctime, sleep, time
+from time import sleep, time
 
-k = 0
+i = 0
 
-def some_task():
-    global k
+
+def optimize():
+    global i
     while True:
-        k = k + 1
+        i = i + 1  # dummy op
 
 
-print('Start at', ctime(time()))
-t = Thread(target=some_task, daemon=True)  # run the some_task function in another
+start = time()
+t = Thread(target=optimize, daemon=True)  # run in another thread
 t.start()
-sleep(9)
-print('Exit  at', ctime(time()))
-print(k)
+sleep(9.5)
+print('Iterations', i)
+print('Time', time() - start)
