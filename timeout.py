@@ -1,21 +1,23 @@
+import random
 import threading
-import time
+from time import time
 
-exitflag = 1
-
+keeprunning = 1
 
 def exiting():
-    global exitflag
-    exitflag = 0
+    global keeprunning
+    keeprunning = 0
 
 
-threading.Timer(9, exiting).start()
+start = time()
+threading.Timer(9.5, exiting).start()
+# our code. at the moment just find max random number
 i, j, k = 0.1, 0.1, 0
-print('Start at', time.ctime(time.time()))
-while exitflag:
-    #    i = random.random()
+while keeprunning:
+    i = random.random()
     k = k + 1
-#    if j < i:
-#       j = i
-print('Exit  at', time.ctime(time.time()))
-print(i, j, k)
+    if j < i:
+        j = i
+print('Max', j)
+print('Iterations', k)
+print('Time', time() - start)
