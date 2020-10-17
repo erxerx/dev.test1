@@ -1,0 +1,286 @@
+cscope 15 /home/ervin/PycharmProjects/dev.test1 -c 0000001524
+	@multi1.py
+
+1 import 
+	~random
+
+2 from 
+	~multiprocessing
+ import 
+Process
+ , 
+Value
+ , 
+Array
+
+3 from 
+	~time
+ import 
+sleep
+ , 
+time
+
+6 def 
+	$worker1
+ ( 
+max1
+ , 
+k1
+ ) :
+
+7 
+max1
+ . 
+	=value
+ = 0.1
+
+8 
+k1
+ . 
+	=value
+ = 0
+
+10 
+	=i
+ = 
+random
+ . 
+	`random
+ ( )
+
+11 
+k1
+ . 
+	=value
+ = 
+k1
+ . 
+value
+ + 1
+
+12 if 
+max1
+ . 
+value
+ < 
+i
+ :
+
+13 
+max1
+ . 
+	=value
+ = 
+i
+ 
+	}
+
+15 def 
+	$worker2
+ ( 
+max2
+ , 
+k2
+ ) :
+
+16 
+max2
+ . 
+	=value
+ = 0.1
+
+17 
+k2
+ . 
+	=value
+ = 0
+
+19 
+	=i
+ = 
+random
+ . 
+	`random
+ ( )
+
+20 
+k2
+ . 
+	=value
+ = 
+k2
+ . 
+value
+ + 1
+
+21 if 
+max2
+ . 
+value
+ < 
+i
+ :
+
+22 
+max2
+ . 
+	=value
+ = 
+i
+ 
+	}
+
+24 if 
+__name__
+ == '__main__' :
+
+25 
+	=start
+ = 
+	`time
+ ( )
+
+26 
+	=max1
+ = 
+	`Value
+ ( 'f' , 0.1 )
+
+27 
+	=k1
+ = 
+	`Value
+ ( 'i' , 0 )
+
+28 
+	=max2
+ = 
+	`Value
+ ( 'f' , 0.1 )
+
+29 
+	=k2
+ = 
+	`Value
+ ( 'i' , 0 )
+
+31 
+	=w1
+ = 
+	`Process
+ ( 
+target
+ = 
+worker1
+ , 
+args
+ = ( 
+max1
+ , 
+k1
+ ) )
+
+32 
+w1
+ . 
+	`start
+ ( )
+
+33 
+	=w2
+ = 
+	`Process
+ ( 
+target
+ = 
+worker2
+ , 
+args
+ = ( 
+max2
+ , 
+k2
+ ) )
+
+34 
+w2
+ . 
+	`start
+ ( )
+
+35 
+	`sleep
+ ( 9.5 )
+
+36 
+w1
+ . 
+	`terminate
+ ( )
+
+37 
+w2
+ . 
+	`terminate
+ ( )
+
+39 print ( 'Max1' , 
+max1
+ . 
+value
+ )
+
+40 print ( 'Iterations1' , 
+k1
+ . 
+value
+ )
+
+41 print ( 'Max2' , 
+max2
+ . 
+value
+ )
+
+42 print ( 'Iterations2' , 
+k2
+ . 
+value
+ )
+
+43 print ( 'Max' , 
+	`max
+ ( 
+max1
+ . 
+value
+ , 
+max2
+ . 
+value
+ ) )
+
+44 print ( 'Iterations' , 
+k1
+ . 
+value
+ + 
+k2
+ . 
+value
+ )
+
+45 print ( 'Time' , 
+	`time
+ ( ) - 
+start
+ )
+
+
+	@
+1
+.
+0
+1
+10
+multi1.py
