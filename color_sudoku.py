@@ -24,7 +24,7 @@ field = [
     [7, 0, 0, 0, 8, 0, 0, 0, 2],
     [0, 0, 0, 0, 1, 0, 0, 0, 0],
     [3, 0, 0, 0, 0, 0, 9, 0, 0],
-    [0, 4, 8, 0, 0, 0, 6, 3, 9],  ## should start with this line. 1 at leftmost pos was removed
+    [1, 4, 8, 0, 0, 0, 6, 3, 9],  ## should start with this line. 1 at leftmost pos was removed
     [0, 0, 7, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 1, 0, 3],
 ]
@@ -49,39 +49,30 @@ def print_sudoku ():
         print()
 
 def chk_sudoku (x,y,z) -> bool:
-    field[y][x] = z
-    row_count[y][z - 1] += 1
-    if row_count[y][z - 1] > 1:
-        row_count[y][z - 1] -= 1
-        field[y][x] = 0
-        return False
-    col_count[x][z - 1] += 1
-    if col_count[x][z - 1] > 1:
-        row_count[y][z - 1] -= 1
-        col_count[x][z - 1] -= 1
-        field[y][x] = 0
-        return False
-    reg_count[region[y][x]][z - 1] += 1
-    if reg_count[region[y][x]][z - 1] > 1:
-        reg_count[region[y][x]][z - 1] -= 1
-        row_count[y][z - 1] -= 1
-        col_count[x][z - 1] -= 1
-        field[y][x] = 0
-        return False
+    global field
+    for i in range(9):
+        if field[y][i] == z or field[i][x] == z:
+            return False
+    reg = region[y][x]
+    regcount = 0
+    for y in range(9):
+        for x in range(9):
+            if region[y][x] == reg:
+                if field[i][x] == z: return False
+                regcount += 1
+                if regcount == 10: break
     return True
 
-def solve_sudoku (x,y,z) -> bool:
-    if not chk_sudoku(x,y,z): return False
-    #print(min([ row_count[x].count(0) for x in range(9) ]))
-    #print([ col_count[x].count(0) for x in range(9) ])
-    #print([ reg_count[x].count(0) for x in range(9) ])
-    # start with min row, col or reg
-    # in there start with lowest num_count
+def solve_sudoku () -> bool:
+    global field
     for y in range(9):
         for x in range(9):
             if not field[y][x]:
                 for z in range(1,10):
-                    if solve_sudoku(x,y,z): return True
+                    if chk_sudoku(x,y,z):
+                        field[y][x] = z
+                        solve_sudoku()
+                field[y][x] = 0
                 return False
     print_sudoku()
     return True
@@ -90,5 +81,5 @@ if __name__ == '__main__':
     print_sudoku()
     start = time()
     print("Solving...")
-    print(solve_sudoku(0,6,1))
+    print(solve_sudoku())
     print(f"Time : {time() - start} seconds")
