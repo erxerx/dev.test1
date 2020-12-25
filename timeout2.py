@@ -3,12 +3,10 @@ from time import sleep, time
 
 i = 0
 
-
 def optimize():
     global i
     while True:
         i = i + 1  # dummy op
-
 
 start = time()
 t = Thread(target=optimize, daemon=True)  # run in another thread

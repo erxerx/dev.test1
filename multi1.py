@@ -2,7 +2,6 @@ import random
 from multiprocessing import Process, Value, Array
 from time import sleep, time
 
-
 def worker1(max1,k1):
     max1.value = 0.1
     k1.value = 0
