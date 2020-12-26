@@ -1,8 +1,8 @@
 from time import time
 
 color = (
-    ('3;30;42', '3;30;43', '3;30;44', '3;30;45', '3;30;46'),
-    ('3;31;42', '3;31;43', '3;31;44', '3;31;45', '3;31;46')
+    ('3;30;42', '3;30;43', '3;30;44', '3;30;45', '3;30;46'),  # OK colors
+    ('3;31;42', '3;31;43', '3;31;44', '3;31;45', '3;31;46')  # NOK colors
 )
 
 region = (
@@ -24,62 +24,60 @@ field = [
     [7, 0, 0, 0, 8, 0, 0, 0, 2],
     [0, 0, 0, 0, 1, 0, 0, 0, 0],
     [3, 0, 0, 0, 0, 0, 9, 0, 0],
-    [1, 4, 8, 0, 0, 0, 6, 3, 9],  ## should start with this line. 1 at leftmost pos was removed
+    [1, 4, 8, 0, 0, 0, 6, 3, 9],  # should start with this line if algo was a bit smarter (more complex?)
     [0, 0, 7, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 1, 0, 3],
 ]
 
-num_count = [9 for x in range(9)]  # how many numbers are missing
-row_count = [[0 for x in range(9)] for y in range(9)]
-col_count = [[0 for x in range(9)] for y in range(9)]
-reg_count = [[0 for x in range(9)] for y in range(9)]
-for y in range(9):
-    for x in range(9):
-        if field[y][x]:
-            num_count[field[y][x] - 1] -= 1
-            row_count[y][field[y][x] - 1] += 1
-            col_count[x][field[y][x] - 1] += 1
-            reg_count[region[y][x]][field[y][x] - 1] += 1
+foundcount = 0
 
-def print_sudoku ():
+
+def print_sudoku():
     for y in range(9):
         for x in range(9):
             print('\x1b[%sm %s\x1b[0m' % (
                 color[0][region[y][x] % 5], field[y][x] if field[y][x] else " "), end='')
         print()
 
-def chk_sudoku (x,y,z) -> bool:
-    global field
+
+def chk_sudoku(ix, iy, z) -> bool:
     for i in range(9):
-        if field[y][i] == z or field[i][x] == z:
-            return False
-    reg = region[y][x]
+        if field[iy][i] == z or field[i][ix] == z:
+            return False  # same number on row or column
+    reg = region[iy][ix]  # region of interest
     regcount = 0
     for y in range(9):
         for x in range(9):
             if region[y][x] == reg:
-                if field[i][x] == z: return False
+                if field[y][x] == z:
+                    return False  # same number in the region
                 regcount += 1
-                if regcount == 10: break
+                if regcount == 9:
+                    return True  # fast exit if all found
     return True
 
-def solve_sudoku () -> bool:
-    global field
+
+def solve_sudoku() -> bool:
+    global foundcount
     for y in range(9):
         for x in range(9):
             if not field[y][x]:
-                for z in range(1,10):
-                    if chk_sudoku(x,y,z):
+                for z in range(1, 10):
+                    if chk_sudoku(x, y, z):
                         field[y][x] = z
                         solve_sudoku()
+                        if foundcount == 1:
+                            return True  # fast exit after 1st solution
                 field[y][x] = 0
-                return False
-    print_sudoku()
-    return True
+                return False  # dead end
+    foundcount += 1
+    return True  # gotcha!
+
 
 if __name__ == '__main__':
     print_sudoku()
     start = time()
     print("Solving...")
     print(solve_sudoku())
+    print_sudoku()
     print(f"Time : {time() - start} seconds")
