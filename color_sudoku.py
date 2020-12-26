@@ -29,8 +29,6 @@ field = [
     [0, 0, 0, 0, 0, 0, 1, 0, 3],
 ]
 
-foundcount = 0
-
 
 def print_sudoku():
     for y in range(9):
@@ -58,19 +56,16 @@ def chk_sudoku(ix, iy, z) -> bool:
 
 
 def solve_sudoku() -> bool:
-    global foundcount
     for y in range(9):
         for x in range(9):
             if not field[y][x]:
                 for z in range(1, 10):
                     if chk_sudoku(x, y, z):
                         field[y][x] = z
-                        solve_sudoku()
-                        if foundcount == 1:
-                            return True  # fast exit after 1st solution
+                        if solve_sudoku():
+                            return True  # fast exit when 1st solution found
                 field[y][x] = 0
                 return False  # dead end
-    foundcount += 1
     return True  # gotcha!
 
 
