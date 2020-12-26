@@ -55,14 +55,14 @@ def ok_sudoku(x, y, z):
     return True
 
 
-def solve_sudoku():
-    for y in range(9):
+def solve_sudoku(iy):
+    for y in range(iy, 9):
         for x in range(9):
             if not field[y][x]:
                 for z in range(1, 10):
                     if ok_sudoku(x, y, z):
                         field[y][x] = z
-                        if solve_sudoku():
+                        if solve_sudoku(y):
                             return True  # fast exit when 1st solution found
                 field[y][x] = 0
                 return False  # dead end
@@ -73,6 +73,6 @@ if __name__ == '__main__':
     print_sudoku()
     start = time()
     print("Solving...")
-    print(solve_sudoku())
+    print(solve_sudoku(0))
     print_sudoku()
     print(f"Time : {time() - start} seconds")
