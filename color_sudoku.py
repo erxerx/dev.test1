@@ -43,14 +43,14 @@ def chk_sudoku(ix, iy, z) -> bool:
         if field[iy][i] == z or field[i][ix] == z:
             return False  # same number on row or column
     reg = region[iy][ix]  # region of interest
-    regcount = 0
+    regfound = 0
     for y in range(9):
         for x in range(9):
             if region[y][x] == reg:
                 if field[y][x] == z:
                     return False  # same number in the region
-                regcount += 1
-                if regcount == 9:
+                regfound += 1
+                if regfound == 9:
                     return True  # fast exit if all found
     return True
 
