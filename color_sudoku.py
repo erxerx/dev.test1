@@ -38,7 +38,7 @@ def print_sudoku():
         print()
 
 
-def chk_sudoku(x, y, z) -> bool:
+def ok_sudoku(x, y, z):
     for i in range(9):
         if field[y][i] == z or field[i][x] == z:
             return False  # same number on row or column
@@ -55,12 +55,12 @@ def chk_sudoku(x, y, z) -> bool:
     return True
 
 
-def solve_sudoku() -> bool:
+def solve_sudoku():
     for y in range(9):
         for x in range(9):
             if not field[y][x]:
                 for z in range(1, 10):
-                    if chk_sudoku(x, y, z):
+                    if ok_sudoku(x, y, z):
                         field[y][x] = z
                         if solve_sudoku():
                             return True  # fast exit when 1st solution found
