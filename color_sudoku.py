@@ -38,11 +38,11 @@ def print_sudoku():
         print()
 
 
-def chk_sudoku(ix, iy, z) -> bool:
+def chk_sudoku(x, y, z) -> bool:
     for i in range(9):
-        if field[iy][i] == z or field[i][ix] == z:
+        if field[y][i] == z or field[i][x] == z:
             return False  # same number on row or column
-    reg = region[iy][ix]  # region of interest
+    reg = region[y][x]  # region of interest
     found = 0
     for y in range(9):
         for x in range(9):
