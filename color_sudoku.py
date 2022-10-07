@@ -66,7 +66,7 @@ def solve_sudoku(iy):
                             return True  # fast exit when 1st solution found
                 field[y][x] = 0
                 return False  # dead end
-    return True  # gotcha!
+    return True  # gotcha! all cells are filled
 
 
 if __name__ == '__main__':
